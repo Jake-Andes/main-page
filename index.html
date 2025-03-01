@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Philippine MRT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e6f2ff;
+            color: #333;
+        }
+        .form-container {
+            background-color: #b3d9ff;
+            border: 2px solid #0066cc;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 20px;
+            width: 50%;
+            display: inline-block;
+        }
+        h1 {
+            text-align: center;
+            color: #e60000;
+        }
+        .btn-primary {
+            background-color: #e60000;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #c70000;
+        }
+        nav {
+            background-color: #b3d9ff;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar-brand img {
+            max-width: 50px;
+        }
+
+        .side-image {
+            float: right;
+            margin-left: 20px;
+            margin-top: 20px;
+            max-width: 45%;
+            border: 2px solid #0066cc;
+        }
+        
+        .second-image {
+            float: right;
+            margin-left: 20px;
+            margin-top: 20px;
+            width: 40%;
+            border: 2px solid #0066cc;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Singapore_LRT_logo.svg/512px-Singapore_LRT_logo.svg.png" alt="MRT Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="https://jake-andes.github.io/Fairview_ICT9Topaz_Q2SW1_Andes_Akingson/">home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://jake-andes.github.io/Fairview_ICT9Topaz_Q2SW2_Andes_Akingson/">Train Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://jake-andes.github.io/Fairview_ICT9Topaz_Q2Quiz1_Andes_Akingson/">help</a>
+                    </li>
+                </ul>
+                <form class="d-flex ms-auto">
+                    <input class="form-control search-bar" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-secondary ms-2" type="button">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="form-container">
+            <h1>MRT Fare Calculator</h1>
+            <form>
+                <div class="mb-3">
+                    <label for="origin" class="form-label">Select Origin Station</label>
+                    <select id="origin" class="form-control">
+                        <option>North Ave</option>
+                        <option>Quezon Ave</option>
+                        <option>GMA Kamuning</option>
+                        <option>Araneta - Cubao</option>
+                        <option>Santolan Annapolis</option>
+                        <option>Ortigas</option>
+                        <option>Shaw Blvd.</option>
+                        <option>Boni</option>
+                        <option>Guadalupe</option>
+                        <option>Buendia</option>
+                        <option>Ayala</option>
+                        <option>Magallanes</option>
+                        <option>Taft Ave</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="destination" class="form-label">Select Destination Station</label>
+                    <select id="destination" class="form-control">
+                        <option>North Ave</option>
+                        <option>Quezon Ave</option>
+                        <option>GMA Kamuning</option>
+                        <option>Araneta - Cubao</option>
+                        <option>Santolan Annapolis</option>
+                        <option>Ortigas</option>
+                        <option>Shaw Blvd.</option>
+                        <option>Boni</option>
+                        <option>Guadalupe</option>
+                        <option>Buendia</option>
+                        <option>Ayala</option>
+                        <option>Magallanes</option>
+                        <option>Taft Ave</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-primary w-100" onclick="calculateFare()">Get Fare</button>
+                <p class="mt-3 text-center" id="fare-result"></p>
+            </form>
+        </div>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Manila-transportation-map.pdf/page1-1200px-Manila-transportation-map.pdf.jpg" class="side-image" alt="Manila MRT Map">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/MRTC_3000_trains_from_Kamuning_footbridge.jpg/300px-MRTC_3000_trains_from_Kamuning_footbridge.jpg" class="second-image" alt="Train Image">
+        
+    </div>
+
+    <script>
+    const fareMatrix = {
+        "North Ave": { "Quezon Ave": 13, "GMA Kamuning": 16, "Araneta - Cubao": 16, "Santolan Annapolis": 20, "Ortigas": 20, "Shaw Blvd.": 20, "Boni": 24, "Guadalupe": 24, "Buendia": 24, "Ayala": 28, "Magallanes": 28, "Taft Ave": 28 },
+        "Quezon Ave": { "North Ave": 13, "GMA Kamuning": 13, "Araneta - Cubao": 16, "Santolan Annapolis": 16, "Ortigas": 20, "Shaw Blvd.": 20, "Boni": 20, "Guadalupe": 24, "Buendia": 24, "Ayala": 24, "Magallanes": 28, "Taft Ave": 28 },
+        "GMA Kamuning": { "North Ave": 16, "Quezon Ave": 13, "Araneta - Cubao": 13, "Santolan Annapolis": 16, "Ortigas": 16, "Shaw Blvd.": 20, "Boni": 20, "Guadalupe": 20, "Buendia": 24, "Ayala": 24, "Magallanes": 24, "Taft Ave": 28 },
+        "Araneta - Cubao": { "North Ave": 16, "Quezon Ave": 16, "GMA Kamuning": 13, "Santolan Annapolis": 13, "Ortigas": 13, "Shaw Blvd.": 16, "Boni": 16, "Guadalupe": 20, "Buendia": 20, "Ayala": 20, "Magallanes": 24, "Taft Ave": 24 },
+        "Santolan Annapolis": { "North Ave": 20, "Quezon Ave": 16, "GMA Kamuning": 16, "Araneta - Cubao": 13, "Ortigas": 13, "Shaw Blvd.": 13, "Boni": 16, "Guadalupe": 16, "Buendia": 20, "Ayala": 20, "Magallanes": 20, "Taft Ave": 24 },
+        "Ortigas": { "North Ave": 20, "Quezon Ave": 20, "GMA Kamuning": 16, "Araneta - Cubao": 13, "Santolan Annapolis": 13, "Shaw Blvd.": 13, "Boni": 13, "Guadalupe": 16, "Buendia": 16, "Ayala": 20, "Magallanes": 20, "Taft Ave": 20 },
+        "Shaw Blvd.": { "North Ave": 20, "Quezon Ave": 20, "GMA Kamuning": 20, "Araneta - Cubao": 16, "Santolan Annapolis": 13, "Ortigas": 13, "Boni": 13, "Guadalupe": 13, "Buendia": 16, "Ayala": 16, "Magallanes": 20, "Taft Ave": 20 },
+        "Boni": { "North Ave": 24, "Quezon Ave": 20, "GMA Kamuning": 20, "Araneta - Cubao": 16, "Santolan Annapolis": 16, "Ortigas": 13, "Shaw Blvd.": 13, "Guadalupe": 13, "Buendia": 13, "Ayala": 16, "Magallanes": 16, "Taft Ave": 20 },
+        "Guadalupe": { "North Ave": 24, "Quezon Ave": 24, "GMA Kamuning": 20, "Araneta - Cubao": 20, "Santolan Annapolis": 16, "Ortigas": 16, "Shaw Blvd.": 13, "Boni": 13, "Buendia": 13, "Ayala": 13, "Magallanes": 16, "Taft Ave": 16 },
+        "Buendia": { "North Ave": 24, "Quezon Ave": 24, "GMA Kamuning": 24, "Araneta - Cubao": 20, "Santolan Annapolis": 20, "Ortigas": 16, "Shaw Blvd.": 16, "Boni": 13, "Guadalupe": 13, "Ayala": 13, "Magallanes": 13, "Taft Ave": 16 },
+        "Ayala": { "North Ave": 28, "Quezon Ave": 24, "GMA Kamuning": 24, "Araneta - Cubao": 20, "Santolan Annapolis": 20, "Ortigas": 20, "Shaw Blvd.": 16, "Boni": 16, "Guadalupe": 13, "Buendia": 13, "Magallanes": 13, "Taft Ave": 13 },
+        "Magallanes": { "North Ave": 28, "Quezon Ave": 28, "GMA Kamuning": 24, "Araneta - Cubao": 24, "Santolan Annapolis": 20, "Ortigas": 20, "Shaw Blvd.": 20, "Boni": 16, "Guadalupe": 16, "Buendia": 13, "Ayala": 13, "Taft Ave": 13 },
+        "Taft Ave": { "North Ave": 28, "Quezon Ave": 28, "GMA Kamuning": 28, "Araneta - Cubao": 24, "Santolan Annapolis": 24, "Ortigas": 20, "Shaw Blvd.": 20, "Boni": 20, "Guadalupe": 16, "Buendia": 16, "Ayala": 13, "Magallanes": 13 }
+    };
+
+    function calculateFare() {
+        const origin = document.getElementById("origin").value;
+        const destination = document.getElementById("destination").value;
+        
+        if (origin === destination) {
+            document.getElementById("fare-result").innerText = "You are already at your destination.";
+        } else if (fareMatrix[origin] && fareMatrix[origin][destination]) {
+            document.getElementById("fare-result").innerText = `Fare: ₱${fareMatrix[origin][destination]}`;
+        } else {
+            document.getElementById("fare-result").innerText = "Fare data unavailable.";
+        }
+    }
+    </script>
+</body>
+</html>
